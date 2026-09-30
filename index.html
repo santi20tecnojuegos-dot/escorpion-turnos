@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Escorpion Barber Club | Sacá tu turno</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b0b0b;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+      min-height: 100vh;
+      background: #111111;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 35px 25px;
+    }
+
+    .logo {
+      width: 105px;
+      height: 105px;
+      border: 2px solid #d4af37;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 25px;
+      color: #d4af37;
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    .brand {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .brand span {
+      color: #d4af37;
+    }
+
+    .subtitle {
+      color: #bdbdbd;
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 35px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .hero-text {
+      color: #b5b5b5;
+      line-height: 1.5;
+      margin-bottom: 30px;
+      max-width: 350px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .primary-btn {
+      background: #d4af37;
+      color: #111111;
+      width: 100%;
+      max-width: 330px;
+      padding: 16px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .primary-btn:hover {
+      background: #e4c04b;
+    }
+
+    .booking {
+      display: none;
+      min-height: 100vh;
+      padding: 25px 20px 40px;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .back {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #222;
+      color: white;
+      font-size: 20px;
+    }
+
+    .top-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .step {
+      color: #d4af37;
+      font-size: 12px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option {
+      background: #191919;
+      border: 1px solid #292929;
+      border-radius: 12px;
+      padding: 17px;
+      text-align: left;
+      transition: .2s;
+    }
+
+    .option:hover {
+      border-color: #d4af37;
+    }
+
+    .option.selected {
+      border-color: #d4af37;
+      background: #211e14;
+    }
+
+    .option-title {
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .option-info {
+      color: #999;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .price {
+      color: #d4af37;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .continue {
+      margin-top: 25px;
+      width: 100%;
+      padding: 16px;
+      background: #d4af37;
+      color: #111;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .continue:disabled {
+      background: #333;
+      color: #777;
+      cursor: not-allowed;
+    }
+
+    .barbers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .barber {
+      background: #191919;
+      border: 1px solid #292929;
+      padding: 20px 8px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .barber.selected {
+      border-color: #d4af37;
+      background: #211e14;
+    }
+
+    .barber-avatar {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: #252525;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      color: #d4af37;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .dates {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    .date {
+      min-width: 75px;
+      background: #191919;
+      border: 1px solid #292929;
+      border-radius: 12px;
+      padding: 12px 7px;
+      text-align: center;
+    }
+
+    .date.selected {
+      border-color: #d4af37;
+      background: #211e14;
+    }
+
+    .date-day {
+      color: #999;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .date-number {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 5px;
+    }
+
+    .times {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .time {
+      padding: 13px 5px;
+      background: #191919;
+      border: 1px solid #292929;
+      color: white;
+      border-radius: 9px;
+    }
+
+    .time.selected {
+      background: #d4af37;
+      color: #111;
+      border-color: #d4af37;
+      font-weight: 800;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 7px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      background: #191919;
+      color: white;
+      border: 1px solid #303030;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #d4af37;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .summary {
+      background: #191919;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 20px;
+      border: 1px solid #292929;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 8px 0;
+      border-bottom: 1px solid #292929;
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      color: #999;
+    }
+
+    .summary-value {
+      text-align: right;
+      font-weight: 700;
+    }
+
+    .success {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 25px;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid #d4af37;
+      color: #d4af37;
+      font-size: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .success h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .success p {
+      color: #aaa;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    @media (min-width: 700px) {
+      body {
+        background: #050505;
+        padding: 30px 0;
+      }
+
+      .app {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 0 40px rgba(0,0,0,.5);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- INICIO -->
+  <section class="hero" id="home">
+
+    <div class="logo">E</div>
+
+    <div class="brand">
+      ESCORPION <span>BARBER CLUB</span>
+    </div>
+
+    <div class="subtitle">
+      BARBERÍA · BAHÍA BLANCA
+    </div>
+
+    <h1>Sacá tu turno</h1>
+
+    <p class="hero-text">
+      Elegí tu servicio, tu barbero y el horario que más te convenga.
+      Rápido, simple y sin crear una cuenta.
+    </p>
+
+    <button class="primary-btn" onclick="startBooking()">
+      SACAR UN TURNO
+    </button>
+
+  </section>
+
+
+  <!-- RESERVA -->
+  <section class="booking" id="booking">
+
+    <div class="top">
+      <button class="back" onclick="goHome()">‹</button>
+
+      <div>
+        <div class="step" id="stepText">Paso 1 de 4</div>
+        <div class="top-title">Escorpion Turnos</div>
+      </div>
+    </div>
+
+
+    <!-- SERVICIO -->
+    <div id="serviceStep">
+
+      <div class="step">Paso 1</div>
+      <h2 class="section-title">Elegí tu servicio</h2>
+
+      <div class="options">
+
+        <div class="option" onclick="selectService(this, 'Corte', 18000, 45)">
+          <div class="option-title">Corte</div>
+          <div class="option-info">45 minutos</div>
+          <div class="price">$18.000</div>
+        </div>
+
+        <div class="option" onclick="selectService(this, 'Corte + cejas', 19000, 45)">
+          <div class="option-title">Corte + cejas</div>
+          <div class="option-info">45 minutos</div>
+          <div class="price">$19.000</div>
+        </div>
+
+        <div class="option" onclick="selectService(this, 'Corte + barba + cejas', 22000, 45)">
+          <div class="option-title">Corte + barba + cejas</div>
+          <div class="option-info">45 minutos</div>
+          <div class="price">$22.000</div>
+        </div>
+
+        <div class="option" onclick="selectService(this, 'Cejas', 2000, 15)">
+          <div class="option-title">Cejas</div>
+          <div class="option-info">15 minutos</div>
+          <div class="price">$2.000</div>
+        </div>
+
+      </div>
+
+      <button class="continue" id="serviceContinue" disabled onclick="showBarbers()">
+        CONTINUAR
+      </button>
+
+    </div>
+
+
+    <!-- BARBEROS -->
+    <div id="barberStep" style="display:none">
+
+      <div class="step">Paso 2</div>
+      <h2 class="section-title">Elegí tu barbero</h2>
+
+      <div class="barbers">
+
+        <div class="barber" onclick="selectBarber(this, 'Santi')">
+          <div class="barber-avatar">S</div>
+          <strong>Santi</strong>
+        </div>
+
+        <div class="barber" onclick="selectBarber(this, 'José')">
+          <div class="barber-avatar">J</div>
+          <strong>José</strong>
+        </div>
+
+        <div class="barber" onclick="selectBarber(this, 'Fran')">
+          <div class="barber-avatar">F</div>
+          <strong>Fran</strong>
+        </div>
+
+      </div>
+
+      <button class="continue" id="barberContinue" disabled onclick="showDate()">
+        CONTINUAR
+      </button>
+
+    </div>
+
+
+    <!-- FECHA -->
+    <div id="dateStep" style="display:none">
+
+      <div class="step">Paso 3</div>
+      <h2 class="section-title">Elegí el día</h2>
+
+      <div class="dates" id="dates"></div>
+
+      <div id="timeContainer" style="display:none">
+
+        <h3 style="margin-top:25px; margin-bottom:5px;">
+          Elegí el horario
+        </h3>
+
+        <p style="color:#888; font-size:13px;">
+          Horarios disponibles según tu barbero.
+        </p>
+
+        <div class="times" id="times"></div>
+
+      </div>
+
+      <button class="continue" id="timeContinue" disabled onclick="showClient()">
+        CONTINUAR
+      </button>
+
+    </div>
+
+
+    <!-- DATOS -->
+    <div id="clientStep" style="display:none">
+
+      <div class="step">Paso 4</div>
+      <h2 class="section-title">Tus datos</h2>
+
+      <div class="form-group">
+        <label>Nombre y apellido</label>
+        <input id="clientName" type="text" placeholder="Ej: Juan Pérez">
+      </div>
+
+      <div class="form-group">
+        <label>WhatsApp</label>
+        <input id="clientPhone" type="tel" placeholder="Ej: 291 123 4567">
+      </div>
+
+      <div class="form-group">
+        <label>Nota (opcional)</label>
+        <textarea id="clientNote" placeholder="Alguna aclaración para el barbero..."></textarea>
+      </div>
+
+      <div class="summary">
+
+        <div class="summary-row">
+          <span class="summary-label">Servicio</span>
+          <span class="summary-value" id="summaryService"></span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Barbero</span>
+          <span class="summary-value" id="summaryBarber"></span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Fecha</span>
+          <span class="summary-value" id="summaryDate"></span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Horario</span>
+          <span class="summary-value" id="summaryTime"></span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Total</span>
+          <span class="summary-value" id="summaryPrice"></span>
+        </div>
+
+      </div>
+
+      <button class="continue" onclick="confirmBooking()">
+        CONFIRMAR TURNO
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONFIRMACION -->
+  <section class="success" id="success">
+
+    <div class="success-icon">✓</div>
+
+    <h2>¡Turno confirmado!</h2>
+
+    <p>
+      Tu turno quedó registrado en
+      <strong>Escorpion Barber Club</strong>.
+    </p>
+
+    <div class="summary" style="width:100%; max-width:380px;">
+      <div class="summary-row">
+        <span class="summary-label">Servicio</span>
+        <span class="summary-value" id="finalService"></span>
+      </div>
+
+      <div class="summary-row">
+        <span class="summary-label">Barbero</span>
+        <span class="summary-value" id="finalBarber"></span>
+      </div>
+
+      <div class="summary-row">
+        <span class="summary-label">Fecha</span>
+        <span class="summary-value" id="finalDate"></span>
+      </div>
+
+      <div class="summary-row">
+        <span class="summary-label">Horario</span>
+        <span class="summary-value" id="finalTime"></span>
+      </div>
+    </div>
+
+    <button class="primary-btn" style="margin-top:25px;" onclick="goHome()">
+      VOLVER AL INICIO
+    </button>
+
+  </section>
+
+</div>
+
+
+<script>
+
+  let selectedService = null;
+  let selectedBarber = null;
+  let selectedDate = null;
+  let selectedTime = null;
+
+
+  function startBooking() {
+
+    document.getElementById("home").style.display = "none";
+    document.getElementById("booking").style.display = "block";
+
+    document.getElementById("serviceStep").style.display = "block";
+    document.getElementById("barberStep").style.display = "none";
+    document.getElementById("dateStep").style.display = "none";
+    document.getElementById("clientStep").style.display = "none";
+
+  }
+
+
+  function goHome() {
+
+    document.getElementById("home").style.display = "flex";
+    document.getElementById("booking").style.display = "none";
+    document.getElementById("success").style.display = "none";
+
+  }
+
+
+  function selectService(element, name, price, duration) {
+
+    document.querySelectorAll("#serviceStep .option")
+      .forEach(el => el.classList.remove("selected"));
+
+    element.classList.add("selected");
+
+    selectedService = {
+      name: name,
+      price: price,
+      duration: duration
+    };
+
+    document.getElementById("serviceContinue").disabled = false;
+
+  }
+
+
+  function showBarbers() {
+
+    document.getElementById("serviceStep").style.display = "none";
+    document.getElementById("barberStep").style.display = "block";
+
+    document.getElementById("stepText").innerText = "Paso 2 de 4";
+
+  }
+
+
+  function selectBarber(element, name) {
+
+    document.querySelectorAll(".barber")
+      .forEach(el => el.classList.remove("selected"));
+
+    element.classList.add("selected");
+
+    selectedBarber = name;
+
+    document.getElementById("barberContinue").disabled = false;
+
+  }
+
+
+  function showDate() {
+
+    document.getElementById("barberStep").style.display = "none";
+    document.getElementById("dateStep").style.display = "block";
+
+    document.getElementById("stepText").innerText = "Paso 3 de 4";
+
+    createDates();
+
+  }
+
+
+  function createDates() {
+
+    const container = document.getElementById("dates");
+
+    container.innerHTML = "";
+
+    const today = new Date();
+
+    const dayNames = [
+      "Dom",
+      "Lun",
+      "Mar",
+      "Mié",
+      "Jue",
+      "Vie",
+      "Sáb"
+    ];
+
+    for (let i = 0; i < 14; i++) {
+
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+
+      const div = document.createElement("div");
+
+      div.className = "date";
+
+      div.innerHTML = `
+        <div class="date-day">${dayNames[date.getDay()]}</div>
+        <div class="date-number">${date.getDate()}</div>
+      `;
+
+      div.onclick = function() {
+
+        document.querySelectorAll(".date")
+          .forEach(el => el.classList.remove("selected"));
+
+        div.classList.add("selected");
+
+        selectedDate = date;
+
+        showTimes();
+
+      };
+
+      container.appendChild(div);
+
+    }
+
+  }
+
+
+  function showTimes() {
+
+    const container = document.getElementById("times");
+
+    container.innerHTML = "";
+
+    document.getElementById("timeContainer").style.display = "block";
+
+    selectedTime = null;
+
+    document.getElementById("timeContinue").disabled = true;
+
+
+    const day = selectedDate.getDay();
+
+    let start = null;
+    let end = null;
+
+
+    /*
+      DOMINGO = 0
+      LUNES = 1
+      MARTES = 2
+      MIÉRCOLES = 3
+      JUEVES = 4
+      VIERNES = 5
+      SÁBADO = 6
+    */
+
+
+    if (day === 0) {
+
+      container.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;color:#888;padding:20px;">
+          La barbería está cerrada los domingos.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    if (day === 6) {
+
+      start = "10:30";
+      end = "20:30";
+
+    } else if (selectedBarber === "Santi") {
+
+      start = "17:30";
+      end = "20:30";
+
+    } else {
+
+      /*
+        José y Fran:
+        10:30 - 13:00
+        16:30 - 20:30
+      */
+
+      createTimeRange(container, "10:30", "13:00");
+      createTimeRange(container, "16:30", "20:30");
+
+      return;
+
+    }
+
+
+    createTimeRange(container, start, end);
+
+  }
+
+
+  function createTimeRange(container, start, end) {
+
+    let current = timeToMinutes(start);
+    const finish = timeToMinutes(end);
+
+    while (current < finish) {
+
+      const duration = selectedService.duration;
+
+      const appointmentEnd = current + duration;
+
+      if (appointmentEnd > finish) {
+        break;
+      }
+
+      const time = minutesToTime(current);
+
+      const button = document.createElement("button");
+
+      button.className = "time";
+      button.innerText = time;
+
+      button.onclick = function() {
+
+        document.querySelectorAll(".time")
+          .forEach(el => el.classList.remove("selected"));
+
+        button.classList.add("selected");
+
+        selectedTime = time;
+
+        document.getElementById("timeContinue").disabled = false;
+
+      };
+
+      container.appendChild(button);
+
+      current += 45;
+
+    }
+
+  }
+
+
+  function timeToMinutes(time) {
+
+    const parts = time.split(":");
+
+    return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+
+  }
+
+
+  function minutesToTime(minutes) {
+
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+
+    return String(hours).padStart(2, "0") + ":" +
+           String(mins).padStart(2, "0");
+
+  }
+
+
+  function showClient() {
+
+    document.getElementById("dateStep").style.display = "none";
+    document.getElementById("clientStep").style.display = "block";
+
+    document.getElementById("stepText").innerText = "Paso 4 de 4";
+
+
+    document.getElementById("summaryService").innerText =
+      selectedService.name;
+
+    document.getElementById("summaryBarber").innerText =
+      selectedBarber;
+
+    document.getElementById("summaryDate").innerText =
+      formatDate(selectedDate);
+
+    document.getElementById("summaryTime").innerText =
+      selectedTime;
+
+    document.getElementById("summaryPrice").innerText =
+      "$" + selectedService.price.toLocaleString("es-AR");
+
+  }
+
+
+  function formatDate(date) {
+
+    return date.toLocaleDateString("es-AR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    });
+
+  }
+
+
+  function confirmBooking() {
+
+    const name =
+      document.getElementById("clientName").value.trim();
+
+    const phone =
+      document.getElementById("clientPhone").value.trim();
+
+
+    if (!name) {
+      alert("Ingresá tu nombre y apellido.");
+      return;
+    }
+
+    if (!phone) {
+      alert("Ingresá tu número de WhatsApp.");
+      return;
+    }
+
+
+    document.getElementById("booking").style.display = "none";
+    document.getElementById("success").style.display = "flex";
+
+
+    document.getElementById("finalService").innerText =
+      selectedService.name;
+
+    document.getElementById("finalBarber").innerText =
+      selectedBarber;
+
+    document.getElementById("finalDate").innerText =
+      formatDate(selectedDate);
+
+    document.getElementById("finalTime").innerText =
+      selectedTime;
+
+  }
+
+</script>
+
+</body>
+</html>
